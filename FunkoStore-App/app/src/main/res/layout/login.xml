@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/fondo" />
+
+    <LinearLayout
+        android:id="@+id/contenedorDatos"
+        android:layout_width="293dp"
+        android:layout_height="400dp"
+        android:background="@drawable/recuadro"
+        android:orientation="vertical"
+        android:padding="16dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btnVolver"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:fontFamily="sans-serif-condensed"
+            android:minWidth="120dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="16dp"
+            android:text="← Volver"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Login"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/txtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="Email..."
+            android:inputType="text"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#CCCCCC" />
+
+        <EditText
+            android:id="@+id/txtPassw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="Contraseña..."
+            android:inputType="textPassword"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#CCCCCC" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnIniciar"
+            android:layout_width="261dp"
+            android:layout_height="48dp"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Iniciar Sesión"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btnIrCrear"
+            android:layout_width="261dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Crear"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

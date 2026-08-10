@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+    <Button
+        android:id="@+id/btnVolver"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:fontFamily="sans-serif-condensed"
+        android:minWidth="120dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="16dp"
+        android:text="← Volver"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Stock de Funkos"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="28sp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Toque para editar | Mantenga presionado para dar de baja"
+        android:textAlignment="center"
+        android:textColor="#666666"
+        android:textSize="12sp"
+        android:layout_marginBottom="12dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listaProductos"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false" />
+
+    <Button
+        android:id="@+id/btnAgregar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#000000"
+        android:fontFamily="sans-serif-condensed"
+        android:text="+ Agregar Funko"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+</LinearLayout>

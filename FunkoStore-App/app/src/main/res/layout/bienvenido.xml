@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_2_2p" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Bienvenido Administrador"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="290dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#000000"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Gestionar Productos"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="290dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#000000"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Cerrar Sesión"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

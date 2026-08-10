@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btnVolver"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:fontFamily="sans-serif-condensed"
+            android:minWidth="120dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="16dp"
+            android:text="← Volver"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/txtTituloForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Alta de Funko"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="28sp"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/txtNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del producto"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/txtDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Descripción"
+            android:inputType="textMultiLine"
+            android:minLines="2" />
+
+        <EditText
+            android:id="@+id/txtPrecio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Precio"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/txtStock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Stock"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/txtCodigoBarra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Código de barra"
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Franquicia"
+            android:textColor="#000000" />
+
+        <Spinner
+            android:id="@+id/spinnerFranquicia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Proveedor"
+            android:textColor="#000000" />
+
+        <Spinner
+            android:id="@+id/spinnerProveedor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Imagen del Funko"
+            android:textColor="#000000" />
+
+        <ImageView
+            android:id="@+id/imgPreview"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="8dp"
+            android:background="#EEEEEE"
+            android:contentDescription="Vista previa de imagen"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_gallery" />
+
+        <Button
+            android:id="@+id/btnSeleccionarImagen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#000000"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Seleccionar imagen del dispositivo"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#000000"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Guardar"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+</ScrollView>
