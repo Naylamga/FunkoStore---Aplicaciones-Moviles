@@ -3,6 +3,7 @@ package com.example.funkostore_vistas
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -10,8 +11,8 @@ import com.bumptech.glide.Glide
 
 class ProductoAdapter(
     private var items: List<Producto> = emptyList(),
-    private val onItemClick: (Producto) -> Unit,
-    private val onItemLongClick: (Producto) -> Boolean,
+    private val onEdit: (Producto) -> Unit,
+    private val onBaja: (Producto) -> Unit,
 ) : RecyclerView.Adapter<ProductoAdapter.ProductoViewHolder>() {
 
     fun actualizarLista(nuevosItems: List<Producto>) {
@@ -26,10 +27,7 @@ class ProductoAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductoViewHolder, position: Int) {
-        val producto = items[position]
-        holder.bind(producto)
-        holder.itemView.setOnClickListener { onItemClick(producto) }
-        holder.itemView.setOnLongClickListener { onItemLongClick(producto) }
+        holder.bind(items[position], onEdit, onBaja)
     }
 
     override fun getItemCount() = items.size
@@ -37,8 +35,14 @@ class ProductoAdapter(
     class ProductoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imgProducto: ImageView = itemView.findViewById(R.id.imgProducto)
         private val txtProducto: TextView = itemView.findViewById(R.id.txtProducto)
+        private val btnEditar: Button = itemView.findViewById(R.id.btnEditar)
+        private val btnBaja: Button = itemView.findViewById(R.id.btnBaja)
 
-        fun bind(producto: Producto) {
+        fun bind(
+            producto: Producto,
+            onEdit: (Producto) -> Unit,
+            onBaja: (Producto) -> Unit
+        ) {
             txtProducto.text =
                 "${producto.nombre}\nPrecio: $${producto.precio} | Stock: ${producto.stock} | ${producto.franquicia}"
 
@@ -53,6 +57,10 @@ class ProductoAdapter(
             } else {
                 imgProducto.setImageResource(android.R.drawable.ic_menu_gallery)
             }
+
+            btnEditar.setOnClickListener { onEdit(producto) }
+            btnBaja.setOnClickListener { onBaja(producto) }
+            itemView.setOnClickListener { onEdit(producto) }
         }
     }
 }

@@ -35,26 +35,34 @@ class LoginActivity : AppCompatActivity() {
             }
 
             lifecycleScope.launch {
-                val result = ApiClient.apiService.login(LoginRequest(email, pass))
-                if (result.isSuccessful && result.body()?.success == true) {
-                    val authData = result.body()?.data
-                    val token = authData?.token
-                    val usuario = authData?.usuario
+                try {
+                    val result = ApiClient.apiService.login(LoginRequest(email, pass))
+                    if (result.isSuccessful && result.body()?.success == true) {
+                        val authData = result.body()?.data
+                        val token = authData?.token
+                        val usuario = authData?.usuario
 
-                    if (token != null) {
-                        sessionManager.token = token
-                        sessionManager.userEmail = usuario?.email
-                        sessionManager.userRole = usuario?.rol
-                        sessionManager.userId = usuario?.id ?: -1
-                        ApiClient.setToken(token)
+                        if (token != null) {
+                            sessionManager.token = token
+                            sessionManager.userEmail = usuario?.email
+                            sessionManager.userRole = usuario?.rol
+                            sessionManager.userId = usuario?.id ?: -1
+                            ApiClient.setToken(token)
 
-                        Toast.makeText(this@LoginActivity, "Bienvenido ${usuario?.nombre ?: ""}", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@LoginActivity, InicioActivity::class.java))
-                        finish()
+                            Toast.makeText(this@LoginActivity, "Bienvenido ${usuario?.nombre ?: ""}", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@LoginActivity, InicioActivity::class.java))
+                            finish()
+                        }
+                    } else {
+                        val msg = result.body()?.message ?: "Email o contraseña incorrectos"
+                        Toast.makeText(this@LoginActivity, msg, Toast.LENGTH_SHORT).show()
                     }
-                } else {
-                    val msg = result.body()?.message ?: "Email o contraseña incorrectos"
-                    Toast.makeText(this@LoginActivity, msg, Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "No se pudo conectar con el servidor: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }

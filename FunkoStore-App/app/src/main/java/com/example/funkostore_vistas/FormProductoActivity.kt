@@ -35,6 +35,8 @@ class FormProductoActivity : AppCompatActivity() {
         idProducto = intent.getIntExtra("id_producto", -1)
         imgPreview = findViewById(R.id.imgPreview)
 
+        ApiClient.setToken(SessionManager(applicationContext).token)
+
         findViewById<Button>(R.id.btnVolver).setOnClickListener { finish() }
         findViewById<Button>(R.id.btnGuardar).setOnClickListener { guardar() }
         findViewById<Button>(R.id.btnSeleccionarImagen).setOnClickListener {

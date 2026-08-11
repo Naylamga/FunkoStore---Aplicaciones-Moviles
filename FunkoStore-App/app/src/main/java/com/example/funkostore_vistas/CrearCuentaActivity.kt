@@ -33,28 +33,36 @@ class CrearCuentaActivity : AppCompatActivity() {
             }
 
             lifecycleScope.launch {
-                val result = ApiClient.apiService.register(
-                    RegisterRequest(nombre, apellido, email, pass)
-                )
-                if (result.isSuccessful && result.body()?.success == true) {
-                    val authData = result.body()?.data
-                    val token = authData?.token
-                    val usuario = authData?.usuario
+                try {
+                    val result = ApiClient.apiService.register(
+                        RegisterRequest(nombre, apellido, email, pass)
+                    )
+                    if (result.isSuccessful && result.body()?.success == true) {
+                        val authData = result.body()?.data
+                        val token = authData?.token
+                        val usuario = authData?.usuario
 
-                    if (token != null) {
-                        sessionManager.token = token
-                        sessionManager.userEmail = usuario?.email
-                        sessionManager.userRole = usuario?.rol
-                        sessionManager.userId = usuario?.id ?: -1
-                        ApiClient.setToken(token)
+                        if (token != null) {
+                            sessionManager.token = token
+                            sessionManager.userEmail = usuario?.email
+                            sessionManager.userRole = usuario?.rol
+                            sessionManager.userId = usuario?.id ?: -1
+                            ApiClient.setToken(token)
+                        }
+
+                        Toast.makeText(this@CrearCuentaActivity, "Cuenta creada. Bienvenido!", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@CrearCuentaActivity, InicioActivity::class.java))
+                        finish()
+                    } else {
+                        val msg = result.body()?.message ?: "Error al crear cuenta"
+                        Toast.makeText(this@CrearCuentaActivity, msg, Toast.LENGTH_SHORT).show()
                     }
-
-                    Toast.makeText(this@CrearCuentaActivity, "Cuenta creada. Bienvenido!", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@CrearCuentaActivity, InicioActivity::class.java))
-                    finish()
-                } else {
-                    val msg = result.body()?.message ?: "Error al crear cuenta"
-                    Toast.makeText(this@CrearCuentaActivity, msg, Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        this@CrearCuentaActivity,
+                        "No se pudo conectar con el servidor: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
