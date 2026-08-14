@@ -20,8 +20,9 @@ class WebSocketClient(
             val options = IO.Options().apply {
                 forceNew = true
                 reconnection = true
-                reconnectionAttempts = 10
-                reconnectionDelay = 1000
+                reconnectionAttempts = 5
+                reconnectionDelay = 2000
+                timeout = 5000
                 auth = mapOf("token" to (token ?: ""))
             }
 
@@ -33,6 +34,11 @@ class WebSocketClient(
 
             socket?.on(Socket.EVENT_DISCONNECT) {
                 onDisconnected?.invoke()
+            }
+
+            socket?.on(Socket.EVENT_CONNECT_ERROR) { args ->
+                // No tumbar la app si la API no está
+                android.util.Log.w("WebSocketClient", "connect_error: ${args.firstOrNull()}")
             }
 
             socket?.on("stock:updated") { args ->

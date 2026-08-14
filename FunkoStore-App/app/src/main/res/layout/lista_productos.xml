@@ -11,6 +11,10 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        android:focusable="true"
         android:fontFamily="sans-serif-condensed"
         android:minWidth="120dp"
         android:paddingStart="0dp"
@@ -18,8 +22,7 @@
         android:text="← Volver"
         android:textAllCaps="false"
         android:textColor="#000000"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp" />
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -34,11 +37,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Toque para editar | Mantenga presionado para dar de baja"
+        android:layout_marginBottom="12dp"
+        android:text="Usá Editar o Dar de baja en cada Funko"
         android:textAlignment="center"
         android:textColor="#666666"
-        android:textSize="12sp"
-        android:layout_marginBottom="12dp" />
+        android:textSize="12sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listaProductos"
