@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Configuración de la API"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Ingrese los datos del servidor"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edtIp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="IP del servidor"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:text="10.0.2.2" />
+
+        <EditText
+            android:id="@+id/edtPuerto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Puerto"
+            android:inputType="number"
+            android:minHeight="48dp"
+            android:text="3000" />
+
+        <EditText
+            android:id="@+id/edtEndpoint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Endpoint"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:text="productos" />
+
+        <TextView
+            android:id="@+id/txtVistaPrevia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="ejemplo: http://10.0.2.2:3000/productos"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnContinuar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Continuar" />
+    </LinearLayout>
+</ScrollView>

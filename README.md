@@ -1,41 +1,109 @@
-# FunkoStore — Aplicaciones Móviles
+# FunkoStore — Alta de producto (API + Supabase)
 
-App Android de gestión de productos + API Node.js con Supabase.
+App Android simple (como la guía) + API Node.js + base de datos en Supabase.
 
-## Estructura
+```
+App Android  →  POST http://IP:PUERTO/productos  →  Node.js  →  Supabase
+```
 
-- `FunkoStore-App/` — Android (Retrofit → `http://10.0.2.2:3000/api/`)
-- `backend/` — API Express + Socket.IO + Supabase
-- `database/funko_house.sql` — esquema original MySQL (referencia)
-- `backend/supabase/schema.sql` — esquema Postgres para Supabase
+## 1. Supabase (una sola vez)
 
-## Setup rápido (Node + Supabase)
+1. Creá un proyecto en [supabase.com](https://supabase.com)
+2. Andá a **SQL Editor** → New query → pegá y ejecutá esto:
 
-1. Crear proyecto en [supabase.com](https://supabase.com)
-2. SQL Editor: correr `backend/supabase/schema.sql`
-3. Storage → New bucket `productos` → **Public**
-4. Project Settings → API: copiar URL y **service_role** key
-5. En `backend/`:
+```sql
+CREATE TABLE IF NOT EXISTS inventario (
+    id SERIAL PRIMARY KEY,
+    producto TEXT NOT NULL,
+    marca TEXT NOT NULL,
+    descripcion TEXT NOT NULL,
+    creado_en TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+(También está en `backend/supabase/schema.sql`)
+
+3. Andá a **Project Settings → API Keys** y copiá:
+   - **Project URL** → ejemplo: `https://xxxx.supabase.co` (sin `/rest/v1/`)
+   - **Secret key** (`sb_secret_...` o la legacy `service_role`)
+
+## 2. API Node.js
 
 ```bash
 cd backend
 copy .env.example .env
-# editar .env con SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, JWT_SECRET
+```
+
+Editá `backend/.env`:
+
+```env
+PORT=3000
+SUPABASE_URL=https://TU_PROYECTO.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=tu_secret_key
+```
+
+Instalá y arrancá:
+
+```bash
 npm install
 npm run dev
 ```
 
-6. Emulador Android: la app ya apunta a `10.0.2.2:3000` (localhost de tu PC).
+Deberías ver:
 
-## Endpoints usados por la app
+```
+API en http://localhost:3000
+Emulador Android: http://10.0.2.2:3000/productos
+```
 
-| Método | Ruta | Uso |
-|--------|------|-----|
-| POST | `/api/auth/login` | Login |
-| POST | `/api/auth/register` | Alta de usuario |
-| GET | `/api/products` | Listado |
-| POST | `/api/products` | Alta producto (multipart) |
-| PUT | `/api/products/:id` | Edición |
-| DELETE | `/api/products/:id` | Baja lógica |
-| GET | `/api/franchises` | Spinners |
-| GET | `/api/providers` | Spinners |
+Probá en el navegador: [http://localhost:3000](http://localhost:3000)
+
+## 3. App Android
+
+1. Abrí `FunkoStore-App` en Android Studio
+2. Corré en el **emulador**
+3. En la pantalla de configuración usá (valores por defecto):
+
+| Campo | Valor (emulador) |
+|--------|-------------------|
+| IP | `10.0.2.2` |
+| Puerto | `3000` |
+| Endpoint | `productos` |
+
+> `10.0.2.2` = `localhost` de tu PC visto desde el emulador.
+
+4. Continuá → completá producto, marca y descripción → **Enviar producto**
+5. Revisá en Supabase → **Table Editor** → tabla `inventario`
+
+### Si usás celular físico
+
+- Poné la IP de tu PC en la red WiFi (ej. `192.168.1.10`)
+- PC y celular en la misma WiFi
+- Firewall de Windows: permitir Node en el puerto 3000
+
+## Estructura
+
+```
+backend/
+  src/index.js              # API: POST /productos
+  supabase/schema.sql       # Tabla inventario
+  .env.example
+FunkoStore-App/             # App Android (config + alta)
+database/funko_house.sql    # BD original de la actividad (referencia)
+```
+
+## Endpoint
+
+| Método | Ruta | Body JSON | Respuesta OK |
+|--------|------|-----------|--------------|
+| POST | `/productos` | `{ "producto", "marca", "descripcion" }` | `{ "mensaje": "Producto creado correctamente" }` |
+
+## Problemas frecuentes
+
+| Problema | Solución |
+|----------|----------|
+| No se conecta la app | La API tiene que estar corriendo (`npm run dev`) |
+| Emulador | IP `10.0.2.2`, no `localhost` |
+| Error de Supabase | Revisá URL y secret key en `.env` |
+| Tabla no existe | Ejecutá el SQL del paso 1 |
+| Cleartext / HTTP | Ya está permitido en el Manifest |
