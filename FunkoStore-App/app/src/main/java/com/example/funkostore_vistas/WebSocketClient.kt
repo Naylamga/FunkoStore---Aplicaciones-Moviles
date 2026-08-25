@@ -26,7 +26,7 @@ class WebSocketClient(
                 auth = mapOf("token" to (token ?: ""))
             }
 
-            socket = IO.socket(URI.create("http://10.0.2.2:3000"), options)
+            socket = IO.socket(URI.create(ConfiguracionApi.obtenerUrlSocket()), options)
 
             socket?.on(Socket.EVENT_CONNECT) {
                 onConnected?.invoke()

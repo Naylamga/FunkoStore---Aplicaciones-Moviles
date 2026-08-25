@@ -8,37 +8,50 @@ import java.util.concurrent.TimeUnit
 
 object ApiClient {
 
-    private const val BASE_URL = "http://10.0.2.2:3000/api/"
     private var token: String? = null
+    private var retrofit: Retrofit? = null
+    private var cachedService: ApiService? = null
 
     fun setToken(jwt: String?) {
         token = jwt
+    }
+
+    fun resetClient() {
+        retrofit = null
+        cachedService = null
     }
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-    private val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor { chain ->
-            val original = chain.request()
-            val builder = original.newBuilder()
-            token?.let {
-                builder.addHeader("Authorization", "Bearer $it")
+    private fun buildClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val original = chain.request()
+                val builder = original.newBuilder()
+                token?.let {
+                    builder.addHeader("Authorization", "Bearer $it")
+                }
+                chain.proceed(builder.build())
             }
-            chain.proceed(builder.build())
+            .addInterceptor(loggingInterceptor)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+    }
+
+    val apiService: ApiService
+        get() {
+            if (cachedService == null) {
+                retrofit = Retrofit.Builder()
+                    .baseUrl(ConfiguracionApi.obtenerUrlBase())
+                    .client(buildClient())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                cachedService = retrofit!!.create(ApiService::class.java)
+            }
+            return cachedService!!
         }
-        .addInterceptor(loggingInterceptor)
-        .connectTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
-        .build()
-
-    private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    val apiService: ApiService = retrofit.create(ApiService::class.java)
 }
