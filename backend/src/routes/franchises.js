@@ -1,10 +1,8 @@
 const express = require('express');
 const { supabase } = require('../supabase');
-const { authRequired } = require('../middleware/auth');
-
 const router = express.Router();
 
-router.get('/', authRequired, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('franquicias')

@@ -1,9 +1,14 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const { supabase } = require('../supabase');
-const { authRequired, signToken } = require('../middleware/auth');
+const config = require('../config');
 
 const router = express.Router();
+
+function signToken(payload) {
+  return jwt.sign(payload, config.jwtSecret, { expiresIn: '7d' });
+}
 
 function passwordFromBody(body) {
   return body.contraseña ?? body.contrasena ?? body.password ?? '';
@@ -152,83 +157,6 @@ router.post('/register', async (req, res) => {
     return res.status(500).json({
       success: false,
       message: err.message || 'Error al registrar'
-    });
-  }
-});
-
-router.get('/profile', authRequired, async (req, res) => {
-  try {
-    const { data: usuario, error } = await supabase
-      .from('usuarios')
-      .select('id_usuario, nombre, apellido, email, telefono, direccion, roles(nombre_rol)')
-      .eq('id_usuario', req.user.id)
-      .maybeSingle();
-
-    if (error) throw error;
-    if (!usuario) {
-      return res.status(404).json({
-        success: false,
-        message: 'Usuario no encontrado'
-      });
-    }
-
-    return res.json({
-      success: true,
-      data: {
-        id_usuario: usuario.id_usuario,
-        nombre: usuario.nombre,
-        apellido: usuario.apellido,
-        email: usuario.email,
-        telefono: usuario.telefono,
-        direccion: usuario.direccion,
-        nombre_rol: usuario.roles?.nombre_rol || null
-      }
-    });
-  } catch (err) {
-    console.error('profile', err);
-    return res.status(500).json({
-      success: false,
-      message: err.message || 'Error al obtener perfil'
-    });
-  }
-});
-
-router.put('/profile', authRequired, async (req, res) => {
-  try {
-    const updates = {};
-    if (req.body.nombre != null) updates.nombre = req.body.nombre;
-    if (req.body.apellido != null) updates.apellido = req.body.apellido;
-    if (req.body.telefono != null) updates.telefono = req.body.telefono;
-    if (req.body.direccion != null) updates.direccion = req.body.direccion;
-    updates.fecha_actualizacion = new Date().toISOString();
-
-    const { data: usuario, error } = await supabase
-      .from('usuarios')
-      .update(updates)
-      .eq('id_usuario', req.user.id)
-      .select('id_usuario, nombre, apellido, email, telefono, direccion, roles(nombre_rol)')
-      .single();
-
-    if (error) throw error;
-
-    return res.json({
-      success: true,
-      message: 'Perfil actualizado',
-      data: {
-        id_usuario: usuario.id_usuario,
-        nombre: usuario.nombre,
-        apellido: usuario.apellido,
-        email: usuario.email,
-        telefono: usuario.telefono,
-        direccion: usuario.direccion,
-        nombre_rol: usuario.roles?.nombre_rol || null
-      }
-    });
-  } catch (err) {
-    console.error('update profile', err);
-    return res.status(500).json({
-      success: false,
-      message: err.message || 'Error al actualizar perfil'
     });
   }
 });

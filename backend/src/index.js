@@ -28,8 +28,6 @@ app.get('/', (_req, res) => {
     routes: [
       'POST /api/auth/login',
       'POST /api/auth/register',
-      'GET  /api/auth/profile',
-      'PUT  /api/auth/profile',
       'GET  /api/products',
       'POST /api/products',
       'GET  /api/franchises',

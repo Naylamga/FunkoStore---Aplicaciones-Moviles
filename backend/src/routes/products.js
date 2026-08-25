@@ -3,8 +3,6 @@ const multer = require('multer');
 const path = require('path');
 const { supabase } = require('../supabase');
 const config = require('../config');
-const { authRequired } = require('../middleware/auth');
-
 const router = express.Router();
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -133,7 +131,7 @@ function parseBodyFields(body) {
   };
 }
 
-router.get('/', authRequired, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const page = Math.max(1, parseInt(req.query.page, 10) || 1);
     const limit = Math.min(100, Math.max(1, parseInt(req.query.limit, 10) || 100));
@@ -181,7 +179,7 @@ router.get('/', authRequired, async (req, res) => {
   }
 });
 
-router.get('/:id', authRequired, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const producto = await fetchProductoById(req.params.id);
     if (!producto) {
@@ -200,7 +198,7 @@ router.get('/:id', authRequired, async (req, res) => {
   }
 });
 
-router.post('/', authRequired, upload.array('imagenes', 5), async (req, res) => {
+router.post('/', upload.array('imagenes', 5), async (req, res) => {
   try {
     const fields = parseBodyFields(req.body);
 
@@ -261,7 +259,7 @@ router.post('/', authRequired, upload.array('imagenes', 5), async (req, res) => 
   }
 });
 
-router.put('/:id', authRequired, upload.array('imagenes', 5), async (req, res) => {
+router.put('/:id', upload.array('imagenes', 5), async (req, res) => {
   try {
     const id = parseInt(req.params.id, 10);
     const fields = parseBodyFields(req.body);
@@ -330,7 +328,7 @@ router.put('/:id', authRequired, upload.array('imagenes', 5), async (req, res) =
   }
 });
 
-router.delete('/:id', authRequired, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id, 10);
     const { error } = await supabase
